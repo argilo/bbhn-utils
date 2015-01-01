@@ -31,17 +31,23 @@ def getTable(lines, tableName):
   return [line.split("\t") for line in lines]
 
 def getHost(ip):
-  host = socket.gethostbyaddr(ip)[0]
-  return host.replace(".local.mesh", "").replace("-", "-\\n", 1)
+  try:
+    host = socket.gethostbyaddr(ip)[0]
+    return host.replace(".local.mesh", "").replace("-", "-\\n", 1)
+  except socket.herror:
+    return ip
 
 def getCall(host):
-  i = host.index("-")
+  i = host.find("-")
   if i == -1: return host
   else: return host[:i]
 
 def roundCost(cost):
-  cost = float(cost)
-  return "{0:.1f}".format(cost)
+  if cost == "INFINITE":
+    return cost
+  else:
+    cost = float(cost)
+    return "{0:.1f}".format(cost)
 
 def printLink(t):
   if t[4] == "0.100": # Ethernet connection
