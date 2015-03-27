@@ -40,7 +40,7 @@ def getHost(ip):
 def getCall(host):
   i = host.find("-")
   if i == -1: return host
-  else: return host[:i]
+  else: return host[:i].upper()
 
 def roundCost(cost):
   if cost == "INFINITE":
