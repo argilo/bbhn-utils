@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2014 Clayton Smith
+# Copyright 2014-2015 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
