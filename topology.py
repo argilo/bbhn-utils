@@ -22,7 +22,7 @@
 import urllib.request
 import socket
 
-HOST = "ve3irr-fn25ai"
+HOST = "localnode"
 PORT = 2006
 
 def getTable(lines, tableName):
