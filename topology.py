@@ -51,20 +51,46 @@ def roundCost(cost):
 
 def printLink(t):
   if t[4] == "0.100": # Ethernet connection
-    if t[5] < t[6]:
-      print('    "' + t[6] + '" -> "' + t[5] + '" [dir=none, penwidth=3];')
+    print('    "' + t[6] + '" -> "' + t[5] + '" [dir=none, penwidth=3];')
   else:
-    print('    "' + t[6] + '" -> "' + t[5] + '" [label="' + roundCost(t[4]) + '"];')
+    if t[4] == "INFINITE":
+      darkness = 0.0
+    else:
+      darkness = 1.0 / float(t[4])
+    gray = "gray" + str(int(65.0 * (1.0 - darkness)))
+    print('    "' + t[6] + '" -> "' + t[5] + '" [label="' + roundCost(t[4]) + '",color=' + gray + ',fontcolor=' + gray + '];')
+
+def pruneTopology(nodes, topology):
+  ethernetSpanningForest = set()
+  visited = set()
+  for node, links in nodes.items():
+    if node in visited: continue
+    spanningTree = []
+    toVisit = [(node, None)]
+    while len(toVisit) > 0:
+      currentNode, link = toVisit.pop()
+      if currentNode in visited: continue
+      visited.add(currentNode)
+      if link:
+        ethernetSpanningForest.add(tuple(link))
+      for link in nodes[currentNode]:
+        if link[4] == "0.100":
+          toVisit.append((link[0], link))
+  return [t for t in topology if t[4] != "0.100" or tuple(t) in ethernetSpanningForest]
 
 lines = urllib.request.urlopen("http://" + HOST + ":" + str(PORT) + "/").readlines()
 lines = [line.decode().strip() for line in lines]
 
 topology = getTable(lines, "Topology")
 
-# Look up DNS names of hosts
+# Look up DNS names of hosts and create node dictionary
+nodes = {}
 for t in topology:
   t.append(getHost(t[0]))
   t.append(getHost(t[1]))
+  nodes.setdefault(t[1], []).append(t)
+
+topology = pruneTopology(nodes, topology)
 
 groups = {}
 nongroups = []
