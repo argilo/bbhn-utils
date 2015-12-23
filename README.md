@@ -40,8 +40,15 @@ Solid lines between nodes indicate Ethernet links. Nodes beginning with
 the same call sign are grouped together.
 
 The Python script connects to a mesh node on port 2006 to fetch
-topology data, then produces a graphviz DOT file as output. A sample
+topology data, then produces a Graphviz DOT file as output. A sample
 shell script (topology.sh) demonstrates how to convert the resulting
 DOT file to a PNG image. It also adds the current UTC time to the PNG
 using ImageMagick and publishes the result to local web server and an
 Amazon S3 bucket.
+
+Requirements:
+
+* Python 3
+* Graphviz
+* ImageMagick (optional)
+* Amazon AWS CLI (optional)
