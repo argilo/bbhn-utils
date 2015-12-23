@@ -1,3 +1,4 @@
+```
 # Copyright 2014-2015 Clayton Smith
 #
 # This file is part of bbhn-utils
@@ -16,11 +17,12 @@
 # along with bbhn-utils; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
+```
 
 bbhn-utils
 ==========
 
-Author: Clayton Smith (VE3IRR)
+Author: Clayton Smith (VE3IRR)  
 Email: <argilo@gmail.com>
 
 This repository contains utilities that may be of interest to operators
@@ -30,7 +32,7 @@ refer to http://www.broadband-hamnet.org/.
 The first utility is a Python script (topology.py) that generates mesh
 topology diagrams.  Sample output can be seen here:
 
-    http://ve2zaz.net/BBHN-Ottawa_www/
+http://ve2zaz.net/BBHN-Ottawa_www/
 
 Each mesh node appears in an oval. Arrows between nodes indicate the
 link cost (i.e. expected number of transmissions required per packet).
