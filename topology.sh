@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Copyright 2014-2015 Clayton Smith
+# Copyright 2014-2016 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
