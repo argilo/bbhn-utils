@@ -22,5 +22,5 @@
 /home/pi/bin/topology.py > /tmp/topology.dot
 dot -Tpng -Ncolor=grey -Nstyle=filled -Nfillcolor=white -Nfontcolor=red -Nwidth=1 -Nfontsize=10 -Efontsize=10 -Gbgcolor=grey /tmp/topology.dot -o /tmp/topology.png
 convert /tmp/topology.png -background \#C0C0C0 label:"`date`" -gravity East -append /tmp/topology2.png
-mv /tmp/topology2.png /var/www/html/topology.png
+cp /tmp/topology2.png /var/www/html/topology.png
 aws s3 cp --acl public-read /var/www/html/topology.png s3://media.ve3irr.ca/bbhn/topology.png
