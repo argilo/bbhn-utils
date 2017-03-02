@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2014-2016 Clayton Smith
+# Copyright 2014-2017 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
@@ -98,6 +98,7 @@ lines = urllib.request.urlopen("http://" + HOST + ":" + str(PORT) +
 lines = [line.decode().strip() for line in lines]
 
 topology = getTable(lines, "Topology")
+hna = getTable(lines, "HNA")
 
 # Look up DNS names of hosts and create node dictionary
 nodes = {}
@@ -122,6 +123,9 @@ for t in topology:
         nongroups.append(t)
 
 print("digraph topology {")
+for h in hna:
+    if h[0] == "0.0.0.0/0":
+        print('  "' + getHost(h[1]) + '" [fillcolor = yellow]')
 for call, links in groups.items():
     print("  subgraph cluster_" + call + " {")
     print("    style=dotted;")
