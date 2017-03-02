@@ -40,7 +40,7 @@ def getHost(ip):
         host = socket.gethostbyaddr(ip)[0]
         return host.replace(".local.mesh", "")
     except socket.herror:
-        return ip
+        return None
 
 
 lines = urllib.request.urlopen("http://" + HOST + ":" + str(PORT) +
