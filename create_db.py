@@ -25,7 +25,7 @@ conn = psycopg2.connect("dbname=topology")
 cur = conn.cursor()
 cur.execute("""
     CREATE TABLE topology (
-        time timestamp,
+        ts timestamp,
         dest_ip inet,
         dest_name varchar,
         last_hop_ip inet,
@@ -33,7 +33,7 @@ cur.execute("""
         lq real,
         nlq real,
         cost real,
-        PRIMARY KEY(time, dest_ip, last_hop_ip)
+        PRIMARY KEY(ts, dest_ip, last_hop_ip)
     );
 """)
 conn.commit()

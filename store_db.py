@@ -56,7 +56,7 @@ for t in topology:
     t.append(getHost(t[0]))
     t.append(getHost(t[1]))
     cur.execute("""INSERT INTO topology
-        (time, dest_ip, dest_name, last_hop_ip, last_hop_name, lq, nlq, cost)
+        (ts, dest_ip, dest_name, last_hop_ip, last_hop_name, lq, nlq, cost)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
         (timestamp, t[0], t[5], t[1], t[6], t[2], t[3],
         "Infinity" if t[4] == "INFINITE" else t[4]))
