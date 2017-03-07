@@ -34,7 +34,11 @@
       {% for row in last_seen %}
       <tr>
         <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
+        <td>
+          {% if row[1] %}
+          <a href="http://{{ row[1]|lower }}.local.mesh:8080/">{{ row[1] }}</a>
+          {% endif %}
+        </td>
         <td>{{ row[2].strftime("%Y-%m-%d %H:%M") }}</td>
       </tr>
       {% endfor %}
