@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Copyright 2017 Clayton Smith
 #
 # This file is part of bbhn-utils
@@ -34,3 +36,6 @@ def node_info():
     conn.close()
 
     return render_template('index.html', last_seen=last_seen)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
