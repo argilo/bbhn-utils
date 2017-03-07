@@ -60,6 +60,18 @@ for t in topology:
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
         (timestamp, t[0], t[5], t[1], t[6], t[2], t[3],
         "Infinity" if t[4] == "INFINITE" else t[4]))
+    if t[5]:
+        cur.execute("""UPDATE last_seen SET (dest_name, ts) = (%s, %s)
+            WHERE dest_ip = %s""", (t[5], timestamp, t[0]))
+        if cur.rowcount == 0:
+            cur.execute("""INSERT INTO last_seen (dest_ip, dest_name, ts)
+                VALUES (%s, %s, %s)""", (t[0], t[5], timestamp))
+    else:
+        cur.execute("""UPDATE last_seen SET (ts) = (%s)
+            WHERE dest_ip = %s""", (timestamp, t[0]))
+        if cur.rowcount == 0:
+            cur.execute("""INSERT INTO last_seen (dest_ip, ts)
+                VALUES (%s, %s)""", (t[0], timestamp))
 conn.commit()
 cur.close()
 conn.close()

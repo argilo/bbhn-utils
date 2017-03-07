@@ -36,6 +36,14 @@ cur.execute("""
         PRIMARY KEY(ts, dest_ip, last_hop_ip)
     );
 """)
+cur.execute("""
+    CREATE TABLE last_seen (
+        dest_ip inet,
+        dest_name varchar,
+        ts timestamp,
+        PRIMARY KEY(dest_ip)
+    );
+""")
 conn.commit()
 cur.close()
 conn.close()
