@@ -1,0 +1,9 @@
+body {
+  background-color: #ddddff;
+  font-family: Sans-Serif;
+}
+
+th, td {
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}

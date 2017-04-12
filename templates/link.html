@@ -1,0 +1,81 @@
+<!doctype html>
+<!--
+# Copyright 2017 Clayton Smith
+#
+# This file is part of bbhn-utils
+#
+# bbhn-utils is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# bbhn-utils is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with bbhn-utils; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street,
+# Boston, MA 02110-1301, USA.
+-->
+<html>
+  <head>
+    <title>Link Quality History for {{ name }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="/static/d3.min.js"></script>
+    <script>
+
+    function fillsvg(num, dest_ip, last_hop_ip) {
+      var svg = d3.select("svg#s" + num),
+          margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = +svg.attr("width") - margin.left - margin.right,
+          height = +svg.attr("height") - margin.top - margin.bottom,
+          g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var x = d3.scaleTime()
+          .rangeRound([0, width]);
+
+      var y = d3.scaleLinear()
+          .rangeRound([height, 0]);
+
+      var line = d3.line()
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); });
+
+      d3.json("/linkdata?dest_ip=" + dest_ip + "&last_hop_ip=" + last_hop_ip, function(data) {
+        x.domain(d3.extent(data, function(d) { return d[0]; }));
+        y.domain([0, 1]);
+
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        g.append("g")
+            .call(d3.axisLeft(y))
+
+        g.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "blue")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 1.5)
+            .attr("d", line);
+      });
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>Link Quality History for {{ name }}</h1>
+    {% for neighbour in neighbours %}
+    <p>Link to <a href="/link?ip={{ neighbour[1] }}">{{ neighbour[2] }}</a>:</p>
+    <svg id="s{{ neighbour[0] }}" width="1200" height="400"></svg>
+    <script>
+      fillsvg({{ neighbour[0] }}, "{{ ip }}", "{{ neighbour[1] }}");
+    </script>
+    {% endfor %}
+    <p><a href="/">Back to the node list.</a></p>
+  </body>
+</html>

@@ -22,6 +22,7 @@
 <html>
   <head>
     <title>Mesh Node Information</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
   </head>
   <body>
     <h1>Mesh Node Information</h1>
@@ -30,6 +31,7 @@
         <th>IP</th>
         <th>Name</th>
         <th>Last Seen</th>
+        <th>LQ</th>
       </tr>
       {% for row in last_seen %}
       <tr>
@@ -40,6 +42,11 @@
           {% endif %}
         </td>
         <td>{{ row[2].strftime("%Y-%m-%d %H:%M") }}</td>
+        <td>
+          {% if row[3] %}
+          <a href="/link?ip={{ row[0] }}">View</a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </table>
