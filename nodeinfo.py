@@ -19,7 +19,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 import json
 import psycopg2
 from datetime import *
@@ -89,7 +89,7 @@ def link_data(dest_ip, last_hop_ip):
     conn.close()
 
     cost = [(ts.timestamp() * 1000, lq) for ts, lq in cost]
-    return json.dumps(cost)
+    return Response(json.dumps(cost), mimetype='application/json')
 
 def fetch_name(cur, ip):
     cur.execute("""SELECT dest_name FROM last_seen
