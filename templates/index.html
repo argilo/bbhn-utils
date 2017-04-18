@@ -44,7 +44,7 @@
         <td>{{ row[2].strftime("%Y-%m-%d %H:%M") }}</td>
         <td>
           {% if row[3] %}
-          <a href="/link?ip={{ row[0] }}">View</a>
+          <a href="/link/{{ row[0] }}.html">View</a>
           {% endif %}
         </td>
       </tr>

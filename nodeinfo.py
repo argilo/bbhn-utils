@@ -43,10 +43,8 @@ def node_info():
 
     return render_template('index.html', last_seen=last_seen)
 
-@app.route('/link')
-def link_info():
-    ip = request.args.get('ip')
-
+@app.route('/link/<ip>.html')
+def link_info(ip):
     conn = psycopg2.connect("dbname=topology")
     cur = conn.cursor()
     name = fetch_name(cur, ip)
@@ -63,11 +61,8 @@ def link_info():
 
     return render_template('link.html', ip=ip, name=name, neighbours=neighbours)
 
-@app.route('/linkdata')
-def link_data():
-    dest_ip = request.args.get('dest_ip')
-    last_hop_ip = request.args.get('last_hop_ip')
-
+@app.route('/linkdata/<dest_ip>/<last_hop_ip>.json')
+def link_data(dest_ip, last_hop_ip):
     conn = psycopg2.connect("dbname=topology")
     cur = conn.cursor()
     now = datetime.now()

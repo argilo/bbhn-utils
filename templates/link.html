@@ -43,7 +43,7 @@
           .x(function(d) { return x(d[0]); })
           .y(function(d) { return y(d[1]); });
 
-      d3.json("/linkdata?dest_ip=" + dest_ip + "&last_hop_ip=" + last_hop_ip, function(data) {
+      d3.json("/linkdata/" + dest_ip + "/" + last_hop_ip + ".json", function(data) {
         x.domain(d3.extent(data, function(d) { return d[0]; }));
         y.domain([0, 1]);
 
