@@ -33,9 +33,10 @@ cur.execute("""
         lq real,
         nlq real,
         cost real,
-        PRIMARY KEY(ts, dest_ip, last_hop_ip)
+        PRIMARY KEY(dest_ip, last_hop_ip, ts)
     );
 """)
+cur.execute("CREATE INDEX ON topology (dest_ip, ts);")
 cur.execute("""
     CREATE TABLE last_seen (
         dest_ip inet,
