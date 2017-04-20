@@ -28,6 +28,7 @@ from node_db import NodeDB
 DISPLAY_HOURS = 24
 OUTPUT_DIR = 'html_out'
 
+
 def mkdir(d):
     if not os.path.exists(d):
         os.makedirs(d)
@@ -59,7 +60,7 @@ for node in last_seen:
         dest_dir = os.path.join(OUTPUT_DIR, 'linkdata', ip)
         mkdir(dest_dir)
         with open(os.path.join(dest_dir, last_hop_ip + '.json'), 'w') as f:
-            f.write(json.dumps(cost, separators=(',',':')))
+            f.write(json.dumps(cost, separators=(',', ':')))
 
     dest_dir = os.path.join(OUTPUT_DIR, 'link')
     mkdir(dest_dir)

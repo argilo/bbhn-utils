@@ -1,6 +1,7 @@
 import psycopg2
 from datetime import *
 
+
 class NodeDB:
     def __init__(self):
         self.conn = psycopg2.connect("dbname=topology")

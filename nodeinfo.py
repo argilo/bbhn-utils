@@ -29,16 +29,19 @@ DISPLAY_HOURS = 24
 node_db = NodeDB()
 app = Flask(__name__, static_url_path='/static')
 
+
 @app.route('/')
 def node_info():
     last_seen = node_db.last_seen(DISPLAY_HOURS)
     return render_template('index.html', last_seen=last_seen)
+
 
 @app.route('/link/<ip>.html')
 def link_info(ip):
     name = node_db.name(ip)
     neighbours = node_db.neighbours(ip, DISPLAY_HOURS)
     return render_template('link.html', ip=ip, name=name, neighbours=neighbours)
+
 
 @app.route('/linkdata/<dest_ip>/<last_hop_ip>.json')
 def link_data(dest_ip, last_hop_ip):
