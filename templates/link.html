@@ -70,7 +70,7 @@
   <body>
     <h1>Link Quality History for {{ name }}</h1>
     {% for neighbour in neighbours %}
-    <p>Link to <a href="/link?ip={{ neighbour[1] }}">{{ neighbour[2] }}</a>:</p>
+    <p>Link to <a href="/link/{{ neighbour[1] }}.html">{{ neighbour[2] }}</a>:</p>
     <svg id="s{{ neighbour[0] }}" width="1200" height="400"></svg>
     <script>
       fillsvg({{ neighbour[0] }}, "{{ ip }}", "{{ neighbour[1] }}");
