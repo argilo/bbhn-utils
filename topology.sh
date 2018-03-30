@@ -19,7 +19,7 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 
-/home/pi/bin/topology.py > /tmp/topology.dot
+/home/pi/bbhn-utils/topology.py > /tmp/topology.dot
 dot -Tpng -Ncolor=grey -Nstyle=filled -Nfillcolor=white -Nfontcolor=red -Nwidth=1 -Nfontsize=10 -Efontsize=10 -Gbgcolor=grey /tmp/topology.dot -o /tmp/topology.png
 convert /tmp/topology.png -background \#C0C0C0 label:"`date`" -gravity East -append /tmp/topology2.png
 cp /tmp/topology2.png /var/www/html/topology.png
