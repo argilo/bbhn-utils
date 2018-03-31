@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2017 Clayton Smith
+# Copyright 2017-2018 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
@@ -40,14 +40,12 @@ def node_info():
 def link_info(ip):
     name = node_db.name(ip)
     neighbours = node_db.neighbours(ip, DISPLAY_HOURS)
+    for i, neighbour in enumerate(neighbours):
+        cost = node_db.cost_history(ip, neighbour[1], DISPLAY_HOURS)
+        cost = [(ts.timestamp() * 1000, lq) for ts, lq in cost]
+        neighbours[i] = neighbour + (json.dumps(cost),)
     return render_template('link.html', ip=ip, name=name, neighbours=neighbours)
 
-
-@app.route('/linkdata/<dest_ip>/<last_hop_ip>.json')
-def link_data(dest_ip, last_hop_ip):
-    cost = node_db.cost_history(dest_ip, last_hop_ip, DISPLAY_HOURS)
-    cost = [(ts.timestamp() * 1000, lq) for ts, lq in cost]
-    return Response(json.dumps(cost), mimetype='application/json')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

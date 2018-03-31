@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-# Copyright 2017 Clayton Smith
+# Copyright 2017-2018 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
@@ -19,14 +19,15 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 -->
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>Link Quality History for {{ name }}</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script src="/static/d3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <script src="../static/d3.min.js"></script>
     <script>
 
-    function fillsvg(num, dest_ip, last_hop_ip) {
+    function fillsvg(num, data) {
       var svg = d3.select("svg#s" + num),
           margin = {top: 20, right: 20, bottom: 30, left: 50},
           width = +svg.attr("width") - margin.left - margin.right,
@@ -43,26 +44,24 @@
           .x(function(d) { return x(d[0]); })
           .y(function(d) { return y(d[1]); });
 
-      d3.json("../linkdata/" + dest_ip + "/" + last_hop_ip + ".json", function(data) {
-        x.domain(d3.extent(data, function(d) { return d[0]; }));
-        y.domain([0, 1]);
+      x.domain(d3.extent(data, function(d) { return d[0]; }));
+      y.domain([0, 1]);
 
-        g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
+      g.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x));
 
-        g.append("g")
-            .call(d3.axisLeft(y))
+      g.append("g")
+          .call(d3.axisLeft(y))
 
-        g.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "blue")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
-            .attr("d", line);
-      });
+      g.append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "blue")
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
+          .attr("stroke-width", 1.5)
+          .attr("d", line);
     }
 
     </script>
@@ -73,7 +72,8 @@
     <p>Link to <a href="./{{ neighbour[1] }}.html">{{ neighbour[2] }}</a>:</p>
     <svg id="s{{ neighbour[0] }}" width="1200" height="400"></svg>
     <script>
-      fillsvg({{ neighbour[0] }}, "{{ ip }}", "{{ neighbour[1] }}");
+      var cost = {{ neighbour[3] }};
+      fillsvg({{ neighbour[0] }}, cost);
     </script>
     {% endfor %}
     <p><a href="../">Back to the node list.</a></p>

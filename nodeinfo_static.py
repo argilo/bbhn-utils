@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2017 Clayton Smith
+# Copyright 2017-2018 Clayton Smith
 #
 # This file is part of bbhn-utils
 #
@@ -52,15 +52,10 @@ for node in last_seen:
     name = node_db.name(ip)
     neighbours = node_db.neighbours(ip, DISPLAY_HOURS)
 
-    for neighbour in neighbours:
-        last_hop_ip = neighbour[1]
-        cost = node_db.cost_history(ip, last_hop_ip, DISPLAY_HOURS)
-
+    for i, neighbour in enumerate(neighbours):
+        cost = node_db.cost_history(ip, neighbour[1], DISPLAY_HOURS)
         cost = [(int(ts.timestamp() * 1000), lq) for ts, lq in cost]
-        dest_dir = os.path.join(OUTPUT_DIR, 'linkdata', ip)
-        mkdir(dest_dir)
-        with open(os.path.join(dest_dir, last_hop_ip + '.json'), 'w') as f:
-            f.write(json.dumps(cost, separators=(',', ':')))
+        neighbours[i] = neighbour + (json.dumps(cost),)
 
     dest_dir = os.path.join(OUTPUT_DIR, 'link')
     mkdir(dest_dir)
