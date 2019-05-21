@@ -49,6 +49,8 @@ with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w') as f:
 
 template = env.get_template('link.html')
 for node in last_seen:
+    if not node[3]:
+        continue
     ip = node[0]
     name = node_db.name(ip)
     neighbours = node_db.neighbours(ip, DISPLAY_HOURS)
