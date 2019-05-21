@@ -33,6 +33,7 @@ def mkdir(d):
     if not os.path.exists(d):
         os.makedirs(d)
 
+
 env = Environment(
     loader=PackageLoader('nodeinfo_static', 'templates'),
     autoescape=True
